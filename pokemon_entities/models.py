@@ -1,8 +1,11 @@
 from django.db import models
 
+
 class PokemonElementType(models.Model):
-    title = models.CharField(verbose_name='название элемента', max_length=200)
-    image = models.ImageField(verbose_name='изображение элемента', upload_to='', null=True)
+    title = models.CharField(verbose_name='название элемента',
+                             max_length=200)
+    image = models.ImageField(verbose_name='изображение элемента',
+                              upload_to='', null=True)
     strong_against = models.ManyToManyField('self',
                                             verbose_name='силен против',
                                             symmetrical=False,
@@ -33,9 +36,8 @@ class Pokemon(models.Model):
                                            related_name='next_evolution')
     element_type = models.ManyToManyField('PokemonElementType',
                                           verbose_name='тип элемента',
-                                          related_name='element'
+                                          related_name='elements'
                                           )
-
 
     def __str__(self):
         return f'{self.title}'
@@ -46,7 +48,7 @@ class PokemonEntity(models.Model):
         Pokemon,
         verbose_name='покемон',
         on_delete=models.CASCADE,
-        related_name='entity'
+        related_name='entities'
     )
     latitude = models.FloatField(verbose_name='широта',
                                  blank=True,
